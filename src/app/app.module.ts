@@ -9,6 +9,10 @@ import { RegistrarconsultaComponent } from './registrarconsulta/registrarconsult
 import { RegistrarclienteComponent } from './registrarcliente/registrarcliente.component';
 import { ListaclienteComponent } from './listacliente/listacliente.component';
 
+import { environment } from '../environments/environment';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,6 +23,8 @@ import { ListaclienteComponent } from './listacliente/listacliente.component';
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
     RouterModule,
     AppRoutingModule
   ],

@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "parcial2dps": {
@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "parcial2dps"
+    }
+  },
+  "defaultProject": "parcial2dps",
+  "cli": {
+    "analytics": false
+  }
 }
