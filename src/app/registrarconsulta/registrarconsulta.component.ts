@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { element } from 'protractor';
 
 import { Cliente } from '../models/cliente';
+import { Consulta } from '../models/consulta';
 import { Mascota } from '../models/mascota';
 import { Medicamento } from '../models/medicamento';
 import { Servicio } from '../models/servicio';
@@ -18,24 +19,33 @@ import { DatosService } from '../services/datos.service';
 export class RegistrarconsultaComponent implements OnInit {
 
   //Declaración de variables a utilizar
+
+  //Variables que almacenan los datos de firebase
   clientes:Cliente[];
   servicios:Servicio[];
   medicamentos:Medicamento[];
+
+  //Variables utilizadas para formatear los datos del cliente
+  clienteProvisional;
   mascotas:Mascota[];
-  clienteSeleccionado:Cliente;
-  mascotasCliente:Mascota[];
-  mascotaSeleccionada:Mascota;
-  nombreClienteSeleccionado:string = "";
+  consultas:Consulta[];
+
+  //Variables asignadas a la vista
   duiClienteSeleccionado:string;
+  clienteSeleccionado:Cliente;
+
   nombreMascotaSeleccionada:string;
-  servicioSeleccionado:string;
-  medicamentoSeleccionado:string;
-  citas:number;
-  ultimoServicio:string;
-  precio:number;
+  mascotaSeleccionada:Mascota;
+  
+  
+  
+  precioServicio:number;
   precioMedicamento:number;
-  precioDescuento:number;
+  consultasMascota:number;
+  total:number;
   descuento:number;
+  subtotal:number;
+  
 
   enviar = false;
   numeroFactura:number;
@@ -46,21 +56,30 @@ export class RegistrarconsultaComponent implements OnInit {
 
   ngOnInit(): void {
     this.clienteSeleccionado = new Cliente;
-    this.mascotasCliente = [];
+    this.clienteSeleccionado.nombre = "";
+    this.duiClienteSeleccionado = "";
+    this.nombreMascotaSeleccionada = "";
+    this.consultasMascota = 0;
+    this.precioMedicamento = 0;
+    this.precioServicio = 0;
+    this.total = 0;
+    this.subtotal = 0;
     this.descuento = 0;
-    this.precio = 0;
-    this.precioDescuento = 0;
     this.numeroFactura = this.getRandomInt(1856, 4786);
 
     //Obteniendo datos de Firebase
     this.datosService.obtenerDatos("Clientes").snapshotChanges().subscribe(item =>{
       this.clientes = [];
+      this.clienteProvisional = new Cliente;
       item.forEach(element => {
         let x = element.payload.toJSON();
         x["DUI"] = element.key;
-        this.clientes.push(x as Cliente);
+        this.clienteProvisional = this.formatearDatos(x as Cliente);
+        this.clientes.push(this.clienteProvisional as Cliente);
+        console.log(this.clientes);
       });
     });
+
     this.datosService.obtenerDatos("Medicamentos").snapshotChanges().subscribe(item =>{
       this.medicamentos = [];
       item.forEach(element => {
@@ -85,39 +104,41 @@ export class RegistrarconsultaComponent implements OnInit {
         this.servicios.push(x as Servicio);
       });
     });
-    this.datosService.obtenerDatos("Mascotas").snapshotChanges().subscribe(item =>{
-      this.mascotas = [];
-      item.forEach(element => {
-        let x = element.payload.toJSON();
-        x["id"] = element.key;
-        this.mascotas.push(x as Mascota);
-      });
-    });
-    
-    
-    
-
-
   }
+
+  formatearDatos(x){
+    this.mascotas = [];
+    this.consultas = [];
+    let m = Object.entries(x.mascotas).forEach(item => {
+      this.mascotas.push(item[1] as Mascota);
+    });
+    let c = Object.entries(x.consultas).forEach(item => {
+      this.consultas.push(item[1] as Consulta);
+    });
+    x.mascotas = this.mascotas;
+    x.consultas = this.consultas;
+    return x;
+  }
+  
 
   //Obteniendo el objeto del cliente a partir de su nombre seleccionado en el select 
   //y asignandolo a la variable clienteSeleccionado
   seleccionarCliente(){
+    
     for (let cliente of this.clientes){
       if(this.duiClienteSeleccionado == cliente.DUI){
-        this.nombreClienteSeleccionado = cliente.nombre;
         this.clienteSeleccionado = cliente;
         break;
       }
     }
 
-    for (let mascota of this.mascotas){
-      if(mascota.DUI == this.duiClienteSeleccionado){
-        console.log(mascota.nombre);
-        this.mascotasCliente.push(mascota);
-      }
-    }
-    //console.log(this.mascotasCliente);
+    this.nombreMascotaSeleccionada = "";
+    this.precioMedicamento = 0;
+    this.precioServicio = 0;
+    this.consultasMascota = 0;
+    this.subtotal = 0;
+    this.total = 0;
+    this.descuento = 0;
   }
 
   //Obteniendo el descuento a aplicar en base a las citas de la mascota seleccionada
@@ -125,7 +146,7 @@ export class RegistrarconsultaComponent implements OnInit {
     for (let mascota of this.clienteSeleccionado.mascotas){
       if(mascota.nombre == this.nombreMascotaSeleccionada){
         this.mascotaSeleccionada = mascota;
-        this.citas = mascota.consultas;
+        this.consultasMascota = mascota.consultas;
         if(mascota.consultas >= 2 && mascota.consultas <= 4){
           this.descuento = 0.05;
         }else if(mascota.consultas > 4){
@@ -134,63 +155,18 @@ export class RegistrarconsultaComponent implements OnInit {
         break;
       }
     }
-    this.medicamentoSeleccionado = "";
-    this.servicioSeleccionado = "";
+    this.subtotal = 0;
+    this.total = 0;
+    this.precioMedicamento = 0;
+    this.precioServicio = 0;
   }
 
   //Obteniendo el medicamento seleccionado y calculando costos tomando en cuenta el descuento.
-  seleccionarMedicamento(){
-    switch(this.medicamentoSeleccionado){
-      case "Ninguno":
-        this.precioMedicamento = 0;
-      break;
-      case "Antiparasitario":
-        this.precioMedicamento = 5;
-      break;
-      case "Suero":
-        this.precioMedicamento = 10;
-      break;
-      case "Anestesia":
-        this.precioMedicamento = 25;
-      break;
-      case "Vacuna contra rabia":
-        this.precioMedicamento = 15;
-      break;
-      case "Desparacitante":
-        this.precioMedicamento = 7;
-      break;
-      case "Antibiótico":
-        this.precioMedicamento = 3;
-      break;
-    }
-    this.servicioSeleccionado = "";
-    this.precio = this.precioMedicamento;
-    this.precioDescuento = this.precio - this.precio*this.descuento;
-  }
-  
-  //Obteniendo el servicio seleccionado y calculando costos tomando en cuenta el descuento.
-  seleccionarServicio(){
-    switch(this.servicioSeleccionado){
-      case "Chequeo general":
-        this.precio = 20 + this.precioMedicamento;
-      break;
-      case "Hospitalización":
-        this.precio = 30 + this.precioMedicamento;
-      break;
-      case "Guardería":
-        this.precio = 10 + this.precioMedicamento;
-      break;
-      case "Peluquería":
-        this.precio = 15 + this.precioMedicamento;
-      break;
-      case "Cirugía":
-        this.precio = 100 + this.precioMedicamento;
-      break;
-      case "Vacunación":
-        this.precio = 25 + this.precioMedicamento;
-      break;
-    }
-    this.precioDescuento = this.precio - this.precio*this.descuento;
+  calcularCostos(){
+    this.precioMedicamento = Number(this.precioMedicamento);
+    this.precioServicio = Number(this.precioServicio);
+    this.subtotal = this.precioMedicamento + this.precioServicio;
+    this.total = this.subtotal - this.subtotal*this.descuento;
   }
 
   //Se guardan los datos de la cita
@@ -217,12 +193,10 @@ export class RegistrarconsultaComponent implements OnInit {
   //Función para vaciar los campos del formulario y eliminar el valor de algunas
   regresarFormulario(formulario:NgForm){
     this.enviar = false;
-    this.nombreClienteSeleccionado = "";
-    this.citas = 0;
-    this.ultimoServicio = "";
+    this.consultasMascota = 0;
     this.descuento = 0;
-    this.precio = 0;
-    this.precioDescuento = 0;
+    this.total = 0;
+    this.subtotal = 0;
     formulario.reset();
   }
 

@@ -1,5 +1,4 @@
 export class Consulta {
-    public id:number
     public nombreMascota:string
     public servicio:string
     public medicamento:string

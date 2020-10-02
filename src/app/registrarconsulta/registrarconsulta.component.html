@@ -1,5 +1,5 @@
 <div [hidden]="enviar" class="card">
-   <h3 class="card-title">REGISTRO DE VISITAS</h3>
+   <h3 class="card-title text-center">REGISTRO DE CONSULTAS</h3>
    <div class="card-body">
        <form #tiendaform = "ngForm" (ngSubmit)="registrarCita()">
            <div class="form-group">
@@ -11,48 +11,44 @@
            </div>
            <div class="form-group">
                <label for="cliente">Nombre del cliente</label>
-               <input type="text" name="cliente" class="form-control" [value]="nombreClienteSeleccionado" readonly>
+               <input type="text" name="cliente" class="form-control" [value]="clienteSeleccionado.nombre" readonly>
            </div>
            <div class="form-group">
                <label for="mascota">Nombre de mascota</label>
-               <select class="form-control" name="mascota" [(ngModel)]="nombreMascotaSeleccionada" #nombreMascota="ngModel" required>
+               <select class="form-control" name="mascota" [(ngModel)]="nombreMascotaSeleccionada" #nombreMascota="ngModel" (change)="descuentoAplicado()" required>
                    <option value="">--- Elige una mascota ---</option>
-                   <option *ngFor="let mascota of mascotasCliente"  [value]="mascota.nombre">{{mascota.nombre}}</option>
+                   <option *ngFor="let mascota of clienteSeleccionado.mascotas"  [value]="mascota.nombre">{{mascota.nombre}}</option>
                </select>
            </div>
            <div class="form-group">
                <label for="medicamento">Agregar medicamento</label>
-               <select class="form-control" name="medicamento" [(ngModel)]="medicamentoSeleccionado" (change)="seleccionarMedicamento()" #medicamento="ngModel" required>
-                   <option value="">--- Elige un servicio ---</option>
-                   <option *ngFor="let medicamento of medicamentos" [value]="medicamento.nombre">{{medicamento.nombre}}</option>
+               <select class="form-control" name="medicamento" [(ngModel)]="precioMedicamento" (change)="calcularCostos()" #medicamento="ngModel" required>
+                   <option value="0">--- Elige un servicio ---</option>
+                   <option *ngFor="let medicamento of medicamentos" [value]="medicamento.precio">{{medicamento.nombre}}</option>
                </select>
            </div>
            <div class="form-group">
-               <label for="servicio">Servicio a realizar</label>
-               <select class="form-control" name="servicio" [(ngModel)]="servicioSeleccionado" (change)="seleccionarServicio()" #servicio="ngModel" required>
-                   <option value="">--- Elige un servicio ---</option>
-                   <option *ngFor="let servicio of servicios" [value]="servicio.nombre">{{servicio.nombre}}</option>
+               <label for="servicio">Servicio a brindar</label>
+               <select class="form-control" name="servicio" [(ngModel)]="precioServicio" (change)="calcularCostos()" #servicio="ngModel" required>
+                   <option value="0">--- Elige un servicio ---</option>
+                   <option *ngFor="let servicio of servicios" [value]="servicio.precio">{{servicio.nombre}}</option>
                </select>
            </div>
            <div class="form-group">
-               <label for="citas">Cantidad de citas de la mascota</label>
-               <input type="text" name="citas" class="form-control" value="{{citas}}" readonly>
+               <label for="citas">Cantidad de consultas de la mascota</label>
+               <input type="text" name="consultasMascota" class="form-control" [value]="consultasMascota" readonly>
            </div>
            <div class="form-group">
-               <label for="precioSin">Ultimo servicio realizado</label>
-               <input type="text" name="precioSin" class="form-control" value="{{ultimoServicio}}" readonly>
-           </div>
-           <div class="form-group">
-               <label for="precioSin">Precio sin descuento</label>
-               <input type="text" name="precioSin" class="form-control" value="{{precio}}" readonly>
+               <label for="precioSin">subtotal</label>
+               <input type="text" name="subtotal" class="form-control" [value]="subtotal" readonly>
            </div>
            <div class="form-group">
                <label for="descuento">Descuento a aplicar</label>
-               <input type="text" name="descuento" class="form-control" value="{{descuento}}" readonly>
+               <input type="text" name="descuento" class="form-control" [value]="descuento" readonly>
            </div>
            <div class="form-group">
-               <label for="precioCon">Precio con descuento</label>
-               <input type="text" name="precioCon" class="form-control" value="{{precioDescuento}}" readonly>
+               <label for="precioCon">Total</label>
+               <input type="text" name="total" class="form-control" [value]="total" readonly>
            </div>
            <button type="submit" class="btn btn-primary" [disabled]="!tiendaform.form.valid">Registar</button>
        </form>
