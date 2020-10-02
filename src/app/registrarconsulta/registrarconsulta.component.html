@@ -1,6 +1,60 @@
-
-    <div class="container">
-    <p>
-       HOLA ESTE ES EL MÓDULO DE CONSULTAS
-    </p>
-    </div>
+<div [hidden]="enviar" class="card">
+   <h3 class="card-title">REGISTRO DE VISITAS</h3>
+   <div class="card-body">
+       <form #tiendaform = "ngForm" (ngSubmit)="registrarCita()">
+           <div class="form-group">
+               <label for="dui">Seleccione un DUI</label>
+               <select class="form-control" name="dui" [(ngModel)]="duiClienteSeleccionado" (change)="seleccionarCliente()" #duiCliente="ngModel" required>
+                   <option value="">--- Elige un DUI ---</option>
+                   <option *ngFor="let cliente of clientes"  [value]="cliente.DUI">{{cliente.DUI}}</option>
+               </select>
+           </div>
+           <div class="form-group">
+               <label for="cliente">Nombre del cliente</label>
+               <input type="text" name="cliente" class="form-control" [value]="nombreClienteSeleccionado" readonly>
+           </div>
+           <div class="form-group">
+               <label for="mascota">Nombre de mascota</label>
+               <select class="form-control" name="mascota" [(ngModel)]="nombreMascotaSeleccionada" #nombreMascota="ngModel" required>
+                   <option value="">--- Elige una mascota ---</option>
+                   <option *ngFor="let mascota of mascotasCliente"  [value]="mascota.nombre">{{mascota.nombre}}</option>
+               </select>
+           </div>
+           <div class="form-group">
+               <label for="medicamento">Agregar medicamento</label>
+               <select class="form-control" name="medicamento" [(ngModel)]="medicamentoSeleccionado" (change)="seleccionarMedicamento()" #medicamento="ngModel" required>
+                   <option value="">--- Elige un servicio ---</option>
+                   <option *ngFor="let medicamento of medicamentos" [value]="medicamento.nombre">{{medicamento.nombre}}</option>
+               </select>
+           </div>
+           <div class="form-group">
+               <label for="servicio">Servicio a realizar</label>
+               <select class="form-control" name="servicio" [(ngModel)]="servicioSeleccionado" (change)="seleccionarServicio()" #servicio="ngModel" required>
+                   <option value="">--- Elige un servicio ---</option>
+                   <option *ngFor="let servicio of servicios" [value]="servicio.nombre">{{servicio.nombre}}</option>
+               </select>
+           </div>
+           <div class="form-group">
+               <label for="citas">Cantidad de citas de la mascota</label>
+               <input type="text" name="citas" class="form-control" value="{{citas}}" readonly>
+           </div>
+           <div class="form-group">
+               <label for="precioSin">Ultimo servicio realizado</label>
+               <input type="text" name="precioSin" class="form-control" value="{{ultimoServicio}}" readonly>
+           </div>
+           <div class="form-group">
+               <label for="precioSin">Precio sin descuento</label>
+               <input type="text" name="precioSin" class="form-control" value="{{precio}}" readonly>
+           </div>
+           <div class="form-group">
+               <label for="descuento">Descuento a aplicar</label>
+               <input type="text" name="descuento" class="form-control" value="{{descuento}}" readonly>
+           </div>
+           <div class="form-group">
+               <label for="precioCon">Precio con descuento</label>
+               <input type="text" name="precioCon" class="form-control" value="{{precioDescuento}}" readonly>
+           </div>
+           <button type="submit" class="btn btn-primary" [disabled]="!tiendaform.form.valid">Registar</button>
+       </form>
+   </div>
+</div>
