@@ -1,5 +1,43 @@
-<div class="container">
-    <p>
-       HOLA ESTE ES EL MÓDULO DE lista cliente
-    </p>
-    </div>
+<div class="container h-100">
+   <div class="row justify-content-center h-100">
+       <div class="col-sm-12 align-self-center text-center">
+            <div class="card-body">           
+               <h3>Clientes registrados</h3>                
+            </div>
+            <div class="row">
+               <div class="col-md-2"></div>
+               <div class="col-md-8">
+                  <div class="form">
+                     <div class="input-group">
+                        <div class="input-group-prepend">
+                           <span class="input-group-text" id="basic-addon1">@</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Buscar usuario" aria-label="Username" aria-describedby="basic-addon1">
+                        &nbsp;
+                        <button class="btn btn-primary">Agregar cliente nuevo</button>
+                     </div>
+                  </div>
+                  <table class="table">
+                     <thead>
+                        <th scope="col">DUI</th>
+                        <th scope="col">NOMBRE</th>
+                        <th scope="col">ACCIONES</th>
+                     </thead>
+                     <tbody>
+                        <tr *ngFor="let cliente of clientes">
+                           <td>{{cliente.DUI}}</td>
+                           <td>{{cliente.nombre}}s</td>
+                           <td>
+                              <button class="btn btn-primary">Ver datos</button>&nbsp;
+                              <button class="btn btn-danger" (click)="eliminarUsuario(cliente.$key)">Eliminar</button>
+                           </td>
+                        </tr>
+                        <tr></tr>
+                     </tbody>
+                  </table>
+               </div>
+               <div class="col-md-2"></div>
+            </div>
+       </div>
+   </div>
+</div>

@@ -22,4 +22,8 @@ export class DatosService {
       mascotas: cliente.mascotas
     });
   }
+
+  eliminarCliente(dui:string){
+    this.firebase.child("Clientes").remove(dui);
+  }
 }
