@@ -1,3 +1,5 @@
+import { Factura } from './factura'
+
 export class Consulta {
     public nombreMascota:string
     public servicio:string
@@ -5,4 +7,5 @@ export class Consulta {
     public subtotal:number
     public descuento:number
     public total:number
+    public factura:Factura
 }

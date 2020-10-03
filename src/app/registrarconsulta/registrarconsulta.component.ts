@@ -12,6 +12,7 @@ import { Servicio } from '../models/servicio';
 import { DatosService } from '../services/datos.service';
 
 import { ToastrService } from 'ngx-toastr';
+import { Factura } from '../models/factura';
 
 @Component({
   selector: 'app-registrarconsulta',
@@ -48,6 +49,9 @@ export class RegistrarconsultaComponent implements OnInit {
 
   //Variable de la nueva consulta
   nuevaConsulta:Consulta;
+
+  //Variable de la nueva factura
+  nuevaFactura:Factura;
   
 
   enviar = false;
@@ -72,6 +76,7 @@ export class RegistrarconsultaComponent implements OnInit {
     this.subtotal = 0;
     this.descuento = 0;
     this.nuevaConsulta = new Consulta;
+    this.nuevaFactura = new Factura;
     this.numeroFactura = this.getRandomInt(1856, 4786);
 
     //Obteniendo datos de Firebase
@@ -194,6 +199,16 @@ export class RegistrarconsultaComponent implements OnInit {
   //Se incrementa el numero de la factura
   registrarConsulta(){
 
+    //Lleno el objeto de la factura
+    this.nuevaFactura.numeroFactura = this.numeroFactura;
+    this.nuevaFactura.duiCliente = this.duiClienteSeleccionado;
+    this.nuevaFactura.nombreCliente = this.clienteSeleccionado.nombre;
+    this.nuevaFactura.nombreMascota = this.nombreMascotaSeleccionada;
+    this.nuevaFactura.servicio = this.nombreServicio;
+    this.nuevaFactura.medicamento = this.nombreMedicamento;
+    this.nuevaFactura.descuento = this.descuento;
+    this.nuevaFactura.total = this.total;
+
     //Lleno el objeto de la nueva consulta
     this.nuevaConsulta.nombreMascota = this.nombreMascotaSeleccionada;
     this.nuevaConsulta.medicamento = this.nombreMedicamento;
@@ -201,7 +216,10 @@ export class RegistrarconsultaComponent implements OnInit {
     this.nuevaConsulta.descuento = this.descuento;
     this.nuevaConsulta.subtotal = this.subtotal;
     this.nuevaConsulta.total = this.total;
+    this.nuevaConsulta.factura = this.nuevaFactura;
     console.log(this.nuevaConsulta);
+
+
 
     //Incremento el numero de consultas de la mascota seleccionada
     for (let cliente of this.clientes){
@@ -212,6 +230,7 @@ export class RegistrarconsultaComponent implements OnInit {
             break;
           }
         }
+
         cliente.consultas.push(this.nuevaConsulta);
         this.datosService.guardarConsulta(cliente);
         break;
@@ -234,6 +253,7 @@ export class RegistrarconsultaComponent implements OnInit {
   //Función para vaciar los campos del formulario y eliminar el valor de algunas
   limpiarFormulario(){
     this.enviar = false;
+
     this.duiClienteSeleccionado = "";
     this.clienteSeleccionado.nombre = "";
     this.nombreMascotaSeleccionada = "";
