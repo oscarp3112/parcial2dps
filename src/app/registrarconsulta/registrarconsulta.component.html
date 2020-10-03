@@ -61,14 +61,14 @@
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item"><b style="padding-right: 10px;">DUI cliente:</b>  {{duiClienteSeleccionado}}</li>
-      <li class="list-group-item"><b style="padding-right: 10px;">Dueño de la mascota:</b>  {{nombreClienteSeleccionado}}</li>
+      <li class="list-group-item"><b style="padding-right: 10px;">Dueño de la mascota:</b>  {{clienteSeleccionado.nombre}}</li>
       <li class="list-group-item"><b style="padding-right: 10px;">Nombre de la mascota:</b>  {{nombreMascotaSeleccionada}}</li>
-      <li class="list-group-item"><b style="padding-right: 10px;">Medicamento aplicado:</b>  {{medicamentoSeleccionado}}</li>
-      <li class="list-group-item"><b style="padding-right: 10px;">Servicio brindado:</b>  {{servicioSeleccionado}}</li>
+      <li class="list-group-item"><b style="padding-right: 10px;">Medicamento aplicado:</b>  {{nombreMedicamento}}</li>
+      <li class="list-group-item"><b style="padding-right: 10px;">Servicio brindado:</b>  {{nombreServicio}}</li>
       <li class="list-group-item"><b style="padding-right: 10px;">Descuento aplicado:</b>  {{descuento}}</li>
-      <li class="list-group-item"><b style="padding-right: 10px;">Costo total:</b>  {{precioDescuento}}</li>
+      <li class="list-group-item"><b style="padding-right: 10px;">Costo total:</b>  {{total}}</li>
     </ul>
     <div class="card-body text-center">
-      <button class="btn btn-primary" (click)="regresarFormulario(tiendaform)" style="margin: 10px 0;">Almacenar</button>
+      <button class="btn btn-primary" (click)="limpiarFormulario()" style="margin: 10px 0;">Almacenar</button>
     </div>
 </div>

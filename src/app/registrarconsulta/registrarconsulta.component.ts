@@ -224,6 +224,16 @@ export class RegistrarconsultaComponent implements OnInit {
       closeButton: true
     });
 
+    
+
+    
+    this.numeroFactura++;
+    this.enviar = true;
+  }
+
+  //Función para vaciar los campos del formulario y eliminar el valor de algunas
+  limpiarFormulario(){
+    this.enviar = false;
     this.duiClienteSeleccionado = "";
     this.clienteSeleccionado.nombre = "";
     this.nombreMascotaSeleccionada = "";
@@ -235,20 +245,6 @@ export class RegistrarconsultaComponent implements OnInit {
     this.subtotal = 0;
     this.total = 0;
     this.descuento = 0;
-
-    
-    //this.numeroFactura++;
-    //this.enviar = true;
-  }
-
-  //Función para vaciar los campos del formulario y eliminar el valor de algunas
-  limpiarFormulario(formulario:NgForm){
-    this.enviar = false;
-    this.consultasMascota = 0;
-    this.descuento = 0;
-    this.total = 0;
-    this.subtotal = 0;
-    formulario.reset();
   }
 
   //Función para obtener un numero aleatorio entre un rango que se utiliza para el número de la factura
