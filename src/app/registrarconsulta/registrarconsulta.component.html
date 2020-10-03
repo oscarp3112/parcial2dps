@@ -54,3 +54,21 @@
        </form>
    </div>
 </div>
+
+<div [hidden]="!enviar" class="card" style="width: 18rem; margin: 0 auto;">
+    <div class="card-body text-center">
+      <h5 class="card-title" style="margin-top: 10PX;">DETALLES FACTURA n°{{numeroFactura}}</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><b style="padding-right: 10px;">DUI cliente:</b>  {{duiClienteSeleccionado}}</li>
+      <li class="list-group-item"><b style="padding-right: 10px;">Dueño de la mascota:</b>  {{nombreClienteSeleccionado}}</li>
+      <li class="list-group-item"><b style="padding-right: 10px;">Nombre de la mascota:</b>  {{nombreMascotaSeleccionada}}</li>
+      <li class="list-group-item"><b style="padding-right: 10px;">Medicamento aplicado:</b>  {{medicamentoSeleccionado}}</li>
+      <li class="list-group-item"><b style="padding-right: 10px;">Servicio brindado:</b>  {{servicioSeleccionado}}</li>
+      <li class="list-group-item"><b style="padding-right: 10px;">Descuento aplicado:</b>  {{descuento}}</li>
+      <li class="list-group-item"><b style="padding-right: 10px;">Costo total:</b>  {{precioDescuento}}</li>
+    </ul>
+    <div class="card-body text-center">
+      <button class="btn btn-primary" (click)="regresarFormulario(tiendaform)" style="margin: 10px 0;">Almacenar</button>
+    </div>
+</div>
