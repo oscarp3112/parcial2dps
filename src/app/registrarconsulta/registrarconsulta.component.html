@@ -1,7 +1,7 @@
 <div [hidden]="enviar" class="card">
    <h3 class="card-title text-center">REGISTRO DE CONSULTAS</h3>
    <div class="card-body">
-       <form #tiendaform = "ngForm" (ngSubmit)="registrarCita()">
+       <form #tiendaform = "ngForm" (ngSubmit)="registrarConsulta()">
            <div class="form-group">
                <label for="dui">Seleccione un DUI</label>
                <select class="form-control" name="dui" [(ngModel)]="duiClienteSeleccionado" (change)="seleccionarCliente()" #duiCliente="ngModel" required>
@@ -22,16 +22,16 @@
            </div>
            <div class="form-group">
                <label for="medicamento">Agregar medicamento</label>
-               <select class="form-control" name="medicamento" [(ngModel)]="precioMedicamento" (change)="calcularCostos()" #medicamento="ngModel" required>
-                   <option value="0">--- Elige un servicio ---</option>
-                   <option *ngFor="let medicamento of medicamentos" [value]="medicamento.precio">{{medicamento.nombre}}</option>
+               <select class="form-control" name="medicamento" [(ngModel)]="nombreMedicamento" (change)="calcularCostos()" #medicamento="ngModel" required>
+                   <option value="">--- Elige un servicio ---</option>
+                   <option *ngFor="let medicamento of medicamentos" [value]="medicamento.nombre">{{medicamento.nombre}}</option>
                </select>
            </div>
            <div class="form-group">
                <label for="servicio">Servicio a brindar</label>
-               <select class="form-control" name="servicio" [(ngModel)]="precioServicio" (change)="calcularCostos()" #servicio="ngModel" required>
-                   <option value="0">--- Elige un servicio ---</option>
-                   <option *ngFor="let servicio of servicios" [value]="servicio.precio">{{servicio.nombre}}</option>
+               <select class="form-control" name="servicio" [(ngModel)]="nombreServicio" (change)="calcularCostos()" #servicio="ngModel" required>
+                   <option value="">--- Elige un servicio ---</option>
+                   <option *ngFor="let servicio of servicios" [value]="servicio.nombre">{{servicio.nombre}}</option>
                </select>
            </div>
            <div class="form-group">

@@ -16,6 +16,9 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 import { DatosService } from './services/datos.service';
 
+import { ToastrModule} from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +33,9 @@ import { DatosService } from './services/datos.service';
     AngularFireDatabaseModule,
     RouterModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [DatosService],
   bootstrap: [AppComponent]

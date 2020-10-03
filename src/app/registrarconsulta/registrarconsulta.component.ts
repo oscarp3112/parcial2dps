@@ -11,6 +11,8 @@ import { Servicio } from '../models/servicio';
 
 import { DatosService } from '../services/datos.service';
 
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-registrarconsulta',
   templateUrl: './registrarconsulta.component.html',
@@ -33,25 +35,27 @@ export class RegistrarconsultaComponent implements OnInit {
   //Variables asignadas a la vista
   duiClienteSeleccionado:string;
   clienteSeleccionado:Cliente;
-
   nombreMascotaSeleccionada:string;
   mascotaSeleccionada:Mascota;
-  
-  
-  
+  nombreServicio:string;
   precioServicio:number;
+  nombreMedicamento:string;
   precioMedicamento:number;
   consultasMascota:number;
   total:number;
   descuento:number;
   subtotal:number;
+
+  //Variable de la nueva consulta
+  nuevaConsulta:Consulta;
   
 
   enviar = false;
   numeroFactura:number;
 
   constructor(
-    private datosService:DatosService
+    private datosService:DatosService,
+    private toastr:ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -60,11 +64,14 @@ export class RegistrarconsultaComponent implements OnInit {
     this.duiClienteSeleccionado = "";
     this.nombreMascotaSeleccionada = "";
     this.consultasMascota = 0;
+    this.nombreMedicamento = "";
+    this.nombreServicio = "";
     this.precioMedicamento = 0;
     this.precioServicio = 0;
     this.total = 0;
     this.subtotal = 0;
     this.descuento = 0;
+    this.nuevaConsulta = new Consulta;
     this.numeroFactura = this.getRandomInt(1856, 4786);
 
     //Obteniendo datos de Firebase
@@ -133,6 +140,8 @@ export class RegistrarconsultaComponent implements OnInit {
     }
 
     this.nombreMascotaSeleccionada = "";
+    this.nombreMedicamento = "";
+    this.nombreServicio = "";
     this.precioMedicamento = 0;
     this.precioServicio = 0;
     this.consultasMascota = 0;
@@ -163,6 +172,16 @@ export class RegistrarconsultaComponent implements OnInit {
 
   //Obteniendo el medicamento seleccionado y calculando costos tomando en cuenta el descuento.
   calcularCostos(){
+    for(let servicio of this.servicios){
+      if(servicio.nombre == this.nombreServicio){
+        this.precioServicio = servicio.precio;
+      }
+    }
+    for(let medicamento of this.medicamentos){
+      if(medicamento.nombre == this.nombreMedicamento){
+        this.precioMedicamento = medicamento.precio;
+      }
+    }
     this.precioMedicamento = Number(this.precioMedicamento);
     this.precioServicio = Number(this.precioServicio);
     this.subtotal = this.precioMedicamento + this.precioServicio;
@@ -173,7 +192,18 @@ export class RegistrarconsultaComponent implements OnInit {
   //Se incrementa por 1 la cantidad de citas de la mascota
   //Se almacena el servicio seleccionado en el atributo ultimoServicio de la mascota
   //Se incrementa el numero de la factura
-  registrarCita(){
+  registrarConsulta(){
+
+    //Lleno el objeto de la nueva consulta
+    this.nuevaConsulta.nombreMascota = this.nombreMascotaSeleccionada;
+    this.nuevaConsulta.medicamento = this.nombreMedicamento;
+    this.nuevaConsulta.servicio = this.nombreServicio;
+    this.nuevaConsulta.descuento = this.descuento;
+    this.nuevaConsulta.subtotal = this.subtotal;
+    this.nuevaConsulta.total = this.total;
+    console.log(this.nuevaConsulta);
+
+    //Incremento el numero de consultas de la mascota seleccionada
     for (let cliente of this.clientes){
       if(cliente.DUI == this.duiClienteSeleccionado){
         for(let mascota of cliente.mascotas){
@@ -182,16 +212,37 @@ export class RegistrarconsultaComponent implements OnInit {
             break;
           }
         }
-        console.log(cliente);
+        cliente.consultas.push(this.nuevaConsulta);
+        this.datosService.guardarConsulta(cliente);
         break;
       } 
     }
-    this.numeroFactura++;
-    this.enviar = true;
+
+    this.toastr.success('Consulta registrada', 'La nueva consulta se ha registrado exitosamente',{
+      progressBar: true,
+      timeOut: 2000,
+      closeButton: true
+    });
+
+    this.duiClienteSeleccionado = "";
+    this.clienteSeleccionado.nombre = "";
+    this.nombreMascotaSeleccionada = "";
+    this.nombreMedicamento = "";
+    this.nombreServicio = "";
+    this.precioMedicamento = 0;
+    this.precioServicio = 0;
+    this.consultasMascota = 0;
+    this.subtotal = 0;
+    this.total = 0;
+    this.descuento = 0;
+
+    
+    //this.numeroFactura++;
+    //this.enviar = true;
   }
 
   //Función para vaciar los campos del formulario y eliminar el valor de algunas
-  regresarFormulario(formulario:NgForm){
+  limpiarFormulario(formulario:NgForm){
     this.enviar = false;
     this.consultasMascota = 0;
     this.descuento = 0;
