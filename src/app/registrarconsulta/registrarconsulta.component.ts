@@ -14,6 +14,9 @@ import { DatosService } from '../services/datos.service';
 import { ToastrService } from 'ngx-toastr';
 import { Factura } from '../models/factura';
 
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
+
 @Component({
   selector: 'app-registrarconsulta',
   templateUrl: './registrarconsulta.component.html',
@@ -100,14 +103,7 @@ export class RegistrarconsultaComponent implements OnInit {
         this.medicamentos.push(x as Medicamento);
       });
     });
-    this.datosService.obtenerDatos("Servicios").snapshotChanges().subscribe(item =>{
-      this.servicios = [];
-      item.forEach(element => {
-        let x = element.payload.toJSON();
-        x["nombre"] = element.key;
-        this.servicios.push(x as Servicio);
-      });
-    });
+
     this.datosService.obtenerDatos("Servicios").snapshotChanges().subscribe(item =>{
       this.servicios = [];
       item.forEach(element => {
@@ -265,6 +261,18 @@ export class RegistrarconsultaComponent implements OnInit {
     this.subtotal = 0;
     this.total = 0;
     this.descuento = 0;
+  }
+
+  descargar(){
+    var element = document.getElementById('facturaPDF');
+    html2canvas(element).then((canvas) => {
+      console.log(canvas);
+      var imgData = canvas.toDataURL('image/png');
+      var doc = new jspdf.jsPDF();
+      var imgHeight = canvas.height * 104 / canvas.width;
+      doc.addImage(imgData,canvas.width/5.5,0,100,200);
+      doc.save("factura"+this.numeroFactura+".pdf");
+    })
   }
 
   //Función para obtener un numero aleatorio entre un rango que se utiliza para el número de la factura
