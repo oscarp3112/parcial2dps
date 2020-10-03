@@ -24,6 +24,6 @@ export class DatosService {
   }
 
   eliminarCliente(dui:string){
-    this.firebase.child("Clientes").remove(dui);
+    this.firebase.list("Clientes").remove(dui);
   }
 }

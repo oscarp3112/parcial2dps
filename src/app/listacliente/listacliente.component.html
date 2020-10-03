@@ -26,10 +26,10 @@
                      <tbody>
                         <tr *ngFor="let cliente of clientes">
                            <td>{{cliente.DUI}}</td>
-                           <td>{{cliente.nombre}}s</td>
+                           <td>{{cliente.nombre}}</td>
                            <td>
                               <button class="btn btn-primary">Ver datos</button>&nbsp;
-                              <button class="btn btn-danger" (click)="eliminarUsuario(cliente.$key)">Eliminar</button>
+                              <button class="btn btn-danger" (click)="eliminarUsuario(cliente.DUI)">Eliminar</button>
                            </td>
                         </tr>
                         <tr></tr>

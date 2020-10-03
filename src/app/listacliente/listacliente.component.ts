@@ -34,12 +34,11 @@ export class ListaclienteComponent implements OnInit {
         let x = element.payload.toJSON();
         x["DUI"] = element.key;
         this.clientes.push(x as Cliente);
-        console.log(this.clientes);
       });
     });
   }
 
-  eliminarUsuario(id:string){
-    this.datosService.eliminarCliente(id);
+  eliminarUsuario(dui:string){
+    this.datosService.eliminarCliente(dui);
   }
 }
