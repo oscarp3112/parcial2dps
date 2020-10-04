@@ -71,8 +71,8 @@
             </tr>
          </thead>
          <tbody *ngIf="cliente.consultas != null && cliente.consultas.length > 0; else sinConsultas">
-            <tr *ngFor="let consulta of cliente.consultas">
-               <td class="align-middle">1</td>
+            <tr *ngFor="let consulta of cliente.consultas; let i = index">
+               <td class="align-middle">{{i+1}}</td>
                <td class="align-middle">{{consulta.nombreMascota}}</td>
                <td class="align-middle">{{consulta.servicio}}</td>
                <td class="align-middle">{{consulta.medicamento}}</td>

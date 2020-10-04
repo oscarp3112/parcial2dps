@@ -139,6 +139,9 @@ export class RegistrarconsultaComponent implements OnInit {
     for (let cliente of this.clientes){
       if(this.duiClienteSeleccionado == cliente.DUI){
         this.clienteSeleccionado = cliente;
+        if(this.clienteSeleccionado.mascotas[0].nombre=="vacio"){
+          this.clienteSeleccionado.mascotas.pop();
+        }
         break;
       }
     }
