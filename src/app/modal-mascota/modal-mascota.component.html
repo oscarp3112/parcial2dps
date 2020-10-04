@@ -6,20 +6,17 @@
       </button>
     </div>
     <div class="modal-body">
-      <form>
+      <form #mascota="ngForm">
         <div class="form-group">
           <label for="nombre">Nombre de mascota</label>
           <div class="input-group">
-            <input id="nombre" class="form-control" name="clienteNombre" type="text" ngbDatepicker #dp="ngbDatepicker">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
-            </div>
+            <input id="nombre" class="form-control" name="nombre" type="text" [(ngModel)]="nombreMascota" required>
           </div>
         </div>
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+      <button type="button" class="btn btn-info" (click)="agregarMascota()" [disabled]="!mascota.form.valid">Save</button>
     </div>
   </ng-template>
   
