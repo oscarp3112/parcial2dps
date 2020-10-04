@@ -10,6 +10,7 @@ import { DatosService } from '../services/datos.service';
 
 import { ToastrService } from 'ngx-toastr';
 import { Consulta } from '../models/consulta';
+import { Mascota } from '../models/mascota';
 
 @Component({
   selector: 'app-listacliente',
@@ -19,8 +20,8 @@ import { Consulta } from '../models/consulta';
 export class ListaclienteComponent implements OnInit {
   //clientes registrados
   clientes:Cliente[];
+  mascotas:Mascota[];
   consultas:Consulta[];
-  consultaProvisional:Consulta;
 
   constructor(
     private datosService:DatosService,
@@ -36,20 +37,19 @@ export class ListaclienteComponent implements OnInit {
         this.clientes.push(this.formatearDatos(x) as Cliente);
       });
     });
+    
   }
 
   formatearDatos(x){
+    this.mascotas = [];
     this.consultas = [];
-    this.consultaProvisional = new Consulta;
-    let c = Object.entries(x.consultas).forEach(item => {
-      this.consultaProvisional = item[1] as Consulta;
-
-      //Con esto ignoro la primera consulta creada por defecto para que no se elimine la rama
-      if(this.consultaProvisional.nombreMascota!="eliminar"){
-        this.consultas.push(item[1] as Consulta);
-      }
+    let m = Object.entries(x.mascotas).forEach(item => {
+      this.mascotas.push(item[1] as Mascota);
     });
-
+    let c = Object.entries(x.consultas).forEach(item => {
+      this.consultas.push(item[1] as Consulta);
+    });
+    x.mascotas = this.mascotas;
     x.consultas = this.consultas;
     return x;
   }
@@ -64,6 +64,7 @@ export class ListaclienteComponent implements OnInit {
   }
 
   verDetalles(cl:Cliente){
+    console.log(cl);
     localStorage.setItem('cliente', JSON.stringify(cl));
   }
 }

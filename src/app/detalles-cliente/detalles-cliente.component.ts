@@ -37,27 +37,57 @@ export class DetallesClienteComponent implements OnInit {
 
     this.clienteProvisional = JSON.parse(localStorage.getItem('cliente'));
     this.cliente = this.formatearDatos(this.clienteProvisional);
-    console.log(this.cliente);
   }
 
   formatearDatos(x){
-    this.mascotas = [];
     this.consultas = [];
+    this.mascotas = [];
+    let consultaProvisional = new Consulta;
+    let mascotaProvisional = new Mascota;
+
     let m = Object.entries(x.mascotas).forEach(item => {
-      this.mascotas.push(item[1] as Mascota);
+      mascotaProvisional = item[1] as Mascota;
+      if(mascotaProvisional.nombre != "vacio"){
+        this.mascotas.push(mascotaProvisional);
+      }
     });
+
     let c = Object.entries(x.consultas).forEach(item => {
-      this.consultas.push(item[1] as Consulta);
+      consultaProvisional = item[1] as Consulta;
+      //Con esto ignoro la primera consulta creada por defecto para que no se elimine la rama
+      if(consultaProvisional.nombreMascota!="eliminar"){
+        this.consultas.push(consultaProvisional);
+      }
     });
+
     x.mascotas = this.mascotas;
     x.consultas = this.consultas;
+    console.log(x);
     return x;
   }
 
   eliminarMascota(mascota:Mascota){
     let indice = this.cliente.mascotas.indexOf(mascota);
     this.cliente.mascotas.splice(indice,1);
-    this.datosService.guardarConsulta(this.cliente);
+
+    let m = new Mascota;
+    if(this.cliente.mascotas == null || this.cliente.mascotas.length == 0){
+      m.nombre = "vacio";
+      m.consultas = 0;
+      this.cliente.mascotas.push(m);
+    }
+
+    let c = new Consulta;
+    if(this.cliente.consultas == null || this.cliente.consultas.length == 0){
+      c.nombreMascota = "eliminar";
+      this.cliente.consultas.push(c);
+    }
+    console.log(c);
+    console.log(m);
+    //this.datosService.guardarConsulta(this.cliente);
+    this.cliente.mascotas.pop();
+    this.cliente.consultas.pop();
+
 
     this.toastr.warning('Mascota Eliminada', 'La mascota se ha eliminado exitosamente',{
       progressBar: true,
