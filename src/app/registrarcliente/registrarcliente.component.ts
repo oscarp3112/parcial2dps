@@ -51,7 +51,7 @@ export class RegistrarclienteComponent implements OnInit {
     this.mascotaNueva.consultas = 0;
 
     //Asignando una consulta vacia
-    this.consultaNueva.descuento = 0;
+    this.consultaNueva.nombreMascota = "eliminar";
 
     //Asignando valores al nuevo cliente
     //this.clienteNuevo.DUI = this.dui;
