@@ -24,7 +24,7 @@
                         <th scope="col">ACCIONES</th>
                      </thead>
                      <tbody>
-                        <tr ng-repeat="let cliente of clientes | filter:buscarDUI">
+                        <tr *ngFor="let cliente of clientes">
                            <td>{{cliente.DUI}}</td>
                            <td>{{cliente.nombre}}</td>
                            <td>

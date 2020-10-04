@@ -19,6 +19,7 @@ import { DatosService } from './services/datos.service';
 import { ToastrModule} from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetallesClienteComponent } from './detalles-cliente/detalles-cliente.component';
+import { VerConsultaComponent } from './ver-consulta/ver-consulta.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { DetallesClienteComponent } from './detalles-cliente/detalles-cliente.co
     RegistrarconsultaComponent,
     RegistrarclienteComponent,
     ListaclienteComponent,
-    DetallesClienteComponent
+    DetallesClienteComponent,
+    VerConsultaComponent
   ],
   imports: [
     BrowserModule,
