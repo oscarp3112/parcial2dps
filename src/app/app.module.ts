@@ -20,6 +20,8 @@ import { ToastrModule} from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetallesClienteComponent } from './detalles-cliente/detalles-cliente.component';
 import { VerConsultaComponent } from './ver-consulta/ver-consulta.component';
+import { ModalMascotaComponent } from './modal-mascota/modal-mascota.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { VerConsultaComponent } from './ver-consulta/ver-consulta.component';
     RegistrarclienteComponent,
     ListaclienteComponent,
     DetallesClienteComponent,
-    VerConsultaComponent
+    VerConsultaComponent,
+    ModalMascotaComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,8 @@ import { VerConsultaComponent } from './ver-consulta/ver-consulta.component';
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    NgbModule
   ],
   providers: [DatosService],
   bootstrap: [AppComponent]

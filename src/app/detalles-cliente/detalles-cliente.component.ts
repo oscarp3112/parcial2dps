@@ -7,6 +7,8 @@ import { Cliente } from '../models/cliente';
 
 import { DatosService } from '../services/datos.service';
 
+import { ModalMascotaComponent } from '../modal-mascota/modal-mascota.component';
+
 import { ToastrService } from 'ngx-toastr'
 import { Mascota } from '../models/mascota';
 import { Consulta } from '../models/consulta';
