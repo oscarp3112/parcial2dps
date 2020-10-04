@@ -1,0 +1,29 @@
+<div class="container h-100">
+    <div class="row justify-content-center h-100">
+        <div class="col-sm-12 align-self-center text-center">
+             <div class="card-body">           
+                <h3>Detalles del cliente</h3>  
+             </div>
+             <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                   <table class="table">
+                      <thead>
+                         <th scope="col">DUI</th>
+                         <th scope="col">NOMBRE</th>
+                         <th scope="col">ACCIONES</th>
+                      </thead>
+                      <tbody>
+                         <tr *ngFor="let cliente of datosCliente">
+                            <td>{{datosCliente.DUI}}</td>
+                            <td>{{datosCliente.nombre}}</td>
+                         </tr>
+                         <tr></tr>
+                      </tbody>
+                   </table>
+                </div>
+                <div class="col-md-2"></div>
+             </div>
+        </div>
+    </div>
+ </div>

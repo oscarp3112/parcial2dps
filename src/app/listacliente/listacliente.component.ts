@@ -3,11 +3,8 @@ import { NgForm } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { element } from 'protractor';
 
+
 import { Cliente } from '../models/cliente';
-import { Consulta } from '../models/consulta';
-import { Mascota } from '../models/mascota';
-import { Medicamento } from '../models/medicamento';
-import { Servicio } from '../models/servicio';
 
 import { DatosService } from '../services/datos.service';
 
@@ -40,5 +37,14 @@ export class ListaclienteComponent implements OnInit {
 
   eliminarUsuario(dui:string){
     this.datosService.eliminarCliente(dui);
+    this.toastr.success('Registro eliminado', 'Se ha eliminado el cliente seleccionado',{
+      progressBar: true,
+      timeOut: 2000,
+      closeButton: true
+    });
+  }
+
+  verDetalles(cl:Cliente){
+    localStorage.setItem('cliente', JSON.stringify(cl));
   }
 }
