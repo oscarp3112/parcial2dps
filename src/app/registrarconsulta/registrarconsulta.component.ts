@@ -112,6 +112,9 @@ export class RegistrarconsultaComponent implements OnInit {
         this.servicios.push(x as Servicio);
       });
     });
+
+    localStorage.removeItem('cliente');
+    localStorage.removeItem('consulta');
   }
 
   formatearDatos(x){

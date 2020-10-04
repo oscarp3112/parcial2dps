@@ -38,6 +38,8 @@ export class ListaclienteComponent implements OnInit {
       });
     });
     
+    localStorage.removeItem('cliente');
+    localStorage.removeItem('consulta');
   }
 
   formatearDatos(x){

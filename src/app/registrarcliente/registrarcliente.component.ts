@@ -42,6 +42,9 @@ export class RegistrarclienteComponent implements OnInit {
     this.clienteNuevo.consultas = [];
     this.mascotaNueva = new Mascota;
     this.consultaNueva = new Consulta;
+
+    localStorage.removeItem('cliente');
+    localStorage.removeItem('consulta');
   }
 
   registrarCliente(){

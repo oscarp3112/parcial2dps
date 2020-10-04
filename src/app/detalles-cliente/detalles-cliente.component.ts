@@ -39,6 +39,9 @@ export class DetallesClienteComponent implements OnInit {
 
     this.clienteProvisional = JSON.parse(localStorage.getItem('cliente'));
     this.cliente = this.formatearDatos(this.clienteProvisional);
+    console.log(this.cliente);
+
+    localStorage.removeItem('consulta');
   }
 
   formatearDatos(x){
@@ -73,22 +76,25 @@ export class DetallesClienteComponent implements OnInit {
     this.cliente.mascotas.splice(indice,1);
 
     let m = new Mascota;
+    m.nombre = "vacio";
+    m.consultas = 0;
     if(this.cliente.mascotas == null || this.cliente.mascotas.length == 0){
-      m.nombre = "vacio";
-      m.consultas = 0;
       this.cliente.mascotas.push(m);
     }
 
+    
     let c = new Consulta;
+    c.nombreMascota = "eliminar";
     if(this.cliente.consultas == null || this.cliente.consultas.length == 0){
-      c.nombreMascota = "eliminar";
       this.cliente.consultas.push(c);
     }
-    console.log(c);
-    console.log(m);
-    //this.datosService.guardarConsulta(this.cliente);
+    console.log(this.cliente);
+    this.datosService.guardarConsulta(this.cliente);
     this.cliente.mascotas.pop();
-    this.cliente.consultas.pop();
+    if(this.cliente.consultas[this.cliente.consultas.length-1].nombreMascota == "eliminar"){
+      this.cliente.consultas.pop();
+    }
+    console.log(this.cliente);
 
 
     this.toastr.warning('Mascota Eliminada', 'La mascota se ha eliminado exitosamente',{
