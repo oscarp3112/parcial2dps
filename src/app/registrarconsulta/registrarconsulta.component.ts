@@ -158,9 +158,9 @@ export class RegistrarconsultaComponent implements OnInit {
         this.mascotaSeleccionada = mascota;
         this.consultasMascota = mascota.consultas;
         if(mascota.consultas >= 2 && mascota.consultas <= 4){
-          this.descuento = 0.05;
+          this.descuento = 5;
         }else if(mascota.consultas > 4){
-          this.descuento = 0.1;
+          this.descuento = 10;
         }
         break;
       }
@@ -186,7 +186,7 @@ export class RegistrarconsultaComponent implements OnInit {
     this.precioMedicamento = Number(this.precioMedicamento);
     this.precioServicio = Number(this.precioServicio);
     this.subtotal = this.precioMedicamento + this.precioServicio;
-    this.total = this.subtotal - this.subtotal*this.descuento;
+    this.total = this.subtotal - this.subtotal*(this.descuento/100);
   }
 
   //Se guardan los datos de la cita
