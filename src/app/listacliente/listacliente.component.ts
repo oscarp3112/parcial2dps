@@ -37,7 +37,7 @@ export class ListaclienteComponent implements OnInit {
 
   eliminarUsuario(dui:string){
     this.datosService.eliminarCliente(dui);
-    this.toastr.success('Registro eliminado', 'Se ha eliminado el cliente seleccionado',{
+    this.toastr.error('Registro eliminado', 'Se ha eliminado el cliente seleccionado',{
       progressBar: true,
       timeOut: 2000,
       closeButton: true

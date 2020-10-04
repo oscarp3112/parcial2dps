@@ -26,4 +26,12 @@ export class DatosService {
   eliminarCliente(dui:string){
     this.firebase.list("Clientes").remove(dui);
   }
+
+  agregarCliente(dui:string, cliente:Cliente){
+    this.firebase.list("Clientes").update(dui, {
+      nombre: cliente.nombre,
+      consultas: cliente.consultas,
+      mascotas: cliente.mascotas
+    });
+  }
 }

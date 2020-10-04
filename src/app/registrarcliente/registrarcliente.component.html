@@ -1,5 +1,23 @@
-<div class="container">
-    <p>
-       HOLA ESTE ES EL MÓDULO DE registrarcliente
-    </p>
-    </div>
+
+<div class="row justify-content-center text-center">
+   <h3 class="h3 col-6">Registrar Cliente Nuevo</h3>
+</div>
+<div class="row justify-content-center">
+   <form class="col-6" (ngSubmit)="registrarCliente()">
+      <div class="form-group">
+         <label for="dui">DUI Cliente:</label>
+         <input type="text" id="dui" name="dui" class="form-control" [value]="dui" [(ngModel)]="dui">
+      </div>
+      <div class="form-group">
+         <label for="nombre">Nombre Cliente:</label>
+         <input type="text" id="nombre" name="nombre" class="form-control" [value]="nombre" [(ngModel)]="nombre">
+      </div>
+      <div class="form-group">
+         <label for="mascota">Nombre Mascota:</label>
+         <input type="text" id="mascota" name="mascota" class="form-control" [value]="mascota" [(ngModel)]="mascota">
+      </div>
+      <div class="form-group text-center">
+         <button class="btn btn-success">Registrar Cliente</button>
+      </div>
+   </form>
+</div>
