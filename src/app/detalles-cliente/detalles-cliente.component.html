@@ -33,7 +33,7 @@
                <th>Eliminar</th>
             </tr>
          </thead>
-         <tbody>
+         <tbody *ngIf="cliente.mascotas != null && cliente.mascotas.length > 0; else sinMascotas">
             <tr *ngFor="let mascota of cliente.mascotas">
                <td class="align-middle">{{mascota.nombre}}</td>
                <td class="align-middle">{{mascota.consultas}}</td>
@@ -43,6 +43,13 @@
                 </svg></button></td>
             </tr>
          </tbody>
+         <ng-template #sinMascotas>
+            <tbody>
+               <tr>
+                  <td colspan="6" class="h4 bg-warning py-2 text-center rounded">No hay mascotas registradas</td>
+               </tr>
+            </tbody>
+         </ng-template>
       </table>
    </div>
 </div>
@@ -63,7 +70,7 @@
                <th>Detalles</th>
             </tr>
          </thead>
-         <tbody>
+         <tbody *ngIf="cliente.consultas != null && cliente.consultas.length > 0; else sinConsultas">
             <tr *ngFor="let consulta of cliente.consultas">
                <td class="align-middle">1</td>
                <td class="align-middle">{{consulta.nombreMascota}}</td>
@@ -77,6 +84,13 @@
                 </svg></button></td>
             </tr>
          </tbody>
+         <ng-template #sinConsultas>
+            <tbody>
+               <tr>
+                  <td colspan="6" class="h4 bg-warning py-2 text-center rounded">No hay consultas registradas</td>
+               </tr>
+            </tbody>
+         </ng-template>
       </table>
    </div>
 </div>
