@@ -12,7 +12,7 @@
                         <div class="input-group-prepend">
                            <span class="input-group-text" id="basic-addon1">@</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Buscar usuario" aria-label="Username" aria-describedby="basic-addon1" ng-model="buscarDUI">
+                        <input type="text" class="form-control" placeholder="Buscar usuario" [(ngModel)]="DUI" (input)="buscarDUI(DUI)">
                         &nbsp;
                         <button class="btn btn-primary">Agregar cliente nuevo</button>
                      </div>
@@ -24,7 +24,7 @@
                         <th scope="col">ACCIONES</th>
                      </thead>
                      <tbody *ngIf="clientes != null && clientes.length > 0; else sinClientes">
-                        <tr *ngFor="let cliente of clientes">
+                        <tr *ngFor="let cliente of clientesFiltrados">
                            <td>{{cliente.DUI}}</td>
                            <td>{{cliente.nombre}}</td>
                            <td>

@@ -20,8 +20,10 @@ import { Mascota } from '../models/mascota';
 export class ListaclienteComponent implements OnInit {
   //clientes registrados
   clientes:Cliente[];
+  clientesFiltrados:Cliente[];
   mascotas:Mascota[];
   consultas:Consulta[];
+  DUI:string;
 
   constructor(
     private datosService:DatosService,
@@ -30,12 +32,14 @@ export class ListaclienteComponent implements OnInit {
 
   ngOnInit(): void {
     this.datosService.obtenerDatos("Clientes").snapshotChanges().subscribe(item =>{
+      this.clientesFiltrados = [];
       this.clientes = [];
       item.forEach(element => {
         let x = element.payload.toJSON();
         x["DUI"] = element.key;
         this.clientes.push(this.formatearDatos(x) as Cliente);
       });
+      this.clientesFiltrados = this.clientes;
     });
     
     localStorage.removeItem('cliente');
@@ -67,5 +71,19 @@ export class ListaclienteComponent implements OnInit {
 
   verDetalles(cl:Cliente){
     localStorage.setItem('cliente', JSON.stringify(cl));
+  }
+
+  buscarDUI(dui:string){
+    console.log(dui);
+    //console.log(this.clientes);
+    if(dui) {
+      this.clientesFiltrados = this.clientes.filter(function (ele, i, array) {
+        let arrayelement = ele.DUI;
+        return arrayelement.includes(dui);
+      });
+      console.log(this.clientesFiltrados);
+    }else{
+      this.clientesFiltrados = this.clientes;
+    }
   }
 }
