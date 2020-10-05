@@ -77,7 +77,7 @@ export class RegistrarclienteComponent implements OnInit {
     this.consultaNueva = new Consulta;
     this.dui = "";
     this.nombre = "";
-    this.mascota = ""; 
+    this.mascota = "";
 
   }
 

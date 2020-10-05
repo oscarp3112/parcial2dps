@@ -10,13 +10,14 @@
         <div class="form-group">
           <label for="nombre">Nombre de mascota</label>
           <div class="input-group">
-            <input id="nombre" class="form-control" name="nombre" type="text" [(ngModel)]="nombreMascota" required>
+            <input id="nombre" class="form-control" name="nombre" type="text" [(ngModel)]="nombreMascota" (input)="reiniciar(nombreMascota)" required>
           </div>
+          <p class="bg-warning rounded my-2 py-2 text-center" *ngIf="nombreValido == false">Ingrese un nombre válido, sin números ni caracteres especiales</p>
         </div>
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-info" (click)="agregarMascota()" [disabled]="!mascota.form.valid">Save</button>
+      <button type="button" class="btn btn-info" (click)="validarNombre(nombreMascota)" [disabled]="!mascota.form.valid">Save</button>
     </div>
   </ng-template>
   

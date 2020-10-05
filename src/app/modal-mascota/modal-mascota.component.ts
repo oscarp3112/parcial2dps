@@ -16,6 +16,8 @@ export class ModalMascotaComponent {
   cliente:Cliente;
   nombreMascota:string = "";
   closeResult = '';
+  regexp:RegExp = /^[a-zA-Z ]*$/g;
+  nombreValido:boolean = true;
 
   @Output() actualizar = new EventEmitter();
 
@@ -33,6 +35,7 @@ export class ModalMascotaComponent {
     });
     this.cliente = JSON.parse(localStorage.getItem('cliente')) as Cliente;
     this.nombreMascota = "";
+    this.nombreValido = true;
   }
 
   agregarMascota(){
@@ -60,6 +63,20 @@ export class ModalMascotaComponent {
       timeOut: 2000,
       closeButton: true
     });
+  }
+
+  validarNombre(nombre:string){
+    this.nombreValido = this.regexp.test(nombre);
+    
+    if(this.nombreValido){
+      this.agregarMascota();
+    }
+  }
+
+  reiniciar(nombre:string){
+    if(nombre == ""){
+      this.nombreValido = true;
+    }
   }
 
 
