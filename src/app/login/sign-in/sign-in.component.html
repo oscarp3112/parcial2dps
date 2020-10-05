@@ -1,0 +1,80 @@
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+
+                    <div class="card rounded-0">
+                        <div class="card-header">
+                            <h3 class="mb-0">Inicio de sesión</h3>
+                        </div>
+                        <div class="displayTable">
+                            <div class="displayTableCell">
+                                <div class="authBlock">
+
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Usuario" #userName
+                                            required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" placeholder="Contraseña" #userPassword
+                                            required>
+                                    </div>
+
+                                    <!-- Calling SignIn Api from AuthService -->
+                                    <div class="form-group">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>
+                                                    <input type="button" class="btn btn-primary button-transparent float-left" value="Ingresar"
+                                                    (click)="authService.SignIn(userName.value, userPassword.value)">
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-outline-primary button-transparent"
+                                                    (click)="authService.GoogleAuth()">
+                                                    <i class="fab fa-google-plus-g"></i>
+                                                    Iniciar sesión con Google
+                                                </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    
+                                    <!-- Olvido contraseña 
+                                    <div class="form-group">
+                                        <span class="or"><span class="orInner left"> </span></span>
+                                    </div>
+
+                                    <br>
+
+                                    <div class="forgotPassword">
+                                        <span routerLink="/resetPassword" style="color:rgb(0, 102, 255);">¿Olvidó su contraseña?</span>
+                                    </div>
+
+                                    <br>
+                                    -->
+
+                                    <!-- Calling GoogleAuth Api from AuthService ****OG
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-outline-primary button-transparent float-left"
+                                            (click)="authService.GoogleAuth()">
+                                            <i class="fab fa-google-plus-g"></i>
+                                            Iniciar sesión con Google
+                                        </button>
+                                    </div>
+
+                                    <br>
+                                    -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!--/row-->
+        </div>
+        <!--/col-->
+    </div>
+</div>

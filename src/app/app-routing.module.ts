@@ -5,15 +5,19 @@ import {RegistrarconsultaComponent} from './registrarconsulta/registrarconsulta.
 import {RegistrarclienteComponent} from './registrarcliente/registrarcliente.component';
 import {ListaclienteComponent} from './listacliente/listacliente.component';
 import {DetallesClienteComponent} from './detalles-cliente/detalles-cliente.component';
-import { VerConsultaComponent } from './ver-consulta/ver-consulta.component';
+import {VerConsultaComponent } from './ver-consulta/ver-consulta.component';
+import {SignInComponent} from './login/sign-in/sign-in.component';
+import {AuthGuard} from "./guard/auth.guard";
+
 
 
 const routes: Routes = [
- {path: 'regConsulta', component: RegistrarconsultaComponent},
- {path: 'regCliente', component: RegistrarclienteComponent},
- {path: 'listCliente', component: ListaclienteComponent},
- {path: 'detalles-cliente', component: DetallesClienteComponent},
- {path: 'ver-consulta', component: VerConsultaComponent}
+ {path: 'regConsulta', component: RegistrarconsultaComponent, canActivate: [AuthGuard]},
+ {path: 'regCliente', component: RegistrarclienteComponent, canActivate: [AuthGuard]},
+ {path: 'listCliente', component: ListaclienteComponent, canActivate: [AuthGuard]},
+ {path: 'detalles-cliente', component: DetallesClienteComponent, canActivate: [AuthGuard]},
+ {path: 'ver-consulta', component: VerConsultaComponent, canActivate: [AuthGuard]},
+ {path: 'login', component: SignInComponent}
 ];
 
 @NgModule({

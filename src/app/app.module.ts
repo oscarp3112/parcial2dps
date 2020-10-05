@@ -13,8 +13,11 @@ import { ListaclienteComponent } from './listacliente/listacliente.component';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { DatosService } from './services/datos.service';
+import { AuthService } from "./services/auth.service";
 
 import { ToastrModule} from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,6 +25,7 @@ import { DetallesClienteComponent } from './detalles-cliente/detalles-cliente.co
 import { VerConsultaComponent } from './ver-consulta/ver-consulta.component';
 import { ModalMascotaComponent } from './modal-mascota/modal-mascota.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SignInComponent } from './login/sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
@@ -32,12 +36,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ListaclienteComponent,
     DetallesClienteComponent,
     VerConsultaComponent,
-    ModalMascotaComponent
+    ModalMascotaComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFirestoreModule,
     RouterModule,
     AppRoutingModule,
     FormsModule,
@@ -45,7 +52,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ToastrModule.forRoot(),
     NgbModule
   ],
-  providers: [DatosService],
+  providers: [DatosService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
