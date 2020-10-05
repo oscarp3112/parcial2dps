@@ -58,7 +58,7 @@ export class ListaclienteComponent implements OnInit {
 
   eliminarUsuario(dui:string){
     this.datosService.eliminarCliente(dui);
-    this.toastr.warning('Registro eliminado', 'Se ha eliminado el cliente seleccionado',{
+    this.toastr.warning('El cliente se ha eliminado exitosamente','Cliente Eliminado',{
       progressBar: true,
       timeOut: 2000,
       closeButton: true
@@ -66,7 +66,6 @@ export class ListaclienteComponent implements OnInit {
   }
 
   verDetalles(cl:Cliente){
-    console.log(cl);
     localStorage.setItem('cliente', JSON.stringify(cl));
   }
 }

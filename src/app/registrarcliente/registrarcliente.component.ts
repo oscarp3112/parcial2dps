@@ -70,6 +70,11 @@ export class RegistrarclienteComponent implements OnInit {
       closeButton: true
     });
 
+    this.clienteNuevo = new Cliente;
+    this.clienteNuevo.mascotas = [];
+    this.clienteNuevo.consultas = [];
+    this.mascotaNueva = new Mascota;
+    this.consultaNueva = new Consulta;
     this.dui = "";
     this.nombre = "";
     this.mascota = ""; 

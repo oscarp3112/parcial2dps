@@ -48,6 +48,7 @@ export class RegistrarconsultaComponent implements OnInit {
   consultasMascota:number;
   total:number;
   descuento:number;
+  descuentoTxt:string;
   subtotal:number;
 
   //Variable de la nueva consulta
@@ -78,6 +79,7 @@ export class RegistrarconsultaComponent implements OnInit {
     this.total = 0;
     this.subtotal = 0;
     this.descuento = 0;
+    this.descuentoTxt = '0%';
     this.nuevaConsulta = new Consulta;
     this.nuevaFactura = new Factura;
     this.numeroFactura = this.getRandomInt(1856, 4786);
@@ -91,7 +93,6 @@ export class RegistrarconsultaComponent implements OnInit {
         x["DUI"] = element.key;
         this.clienteProvisional = this.formatearDatos(x as Cliente);
         this.clientes.push(this.clienteProvisional as Cliente);
-        console.log(this.clientes);
       });
     });
 
@@ -154,6 +155,7 @@ export class RegistrarconsultaComponent implements OnInit {
     this.consultasMascota = 0;
     this.subtotal = 0;
     this.total = 0;
+    this.descuentoTxt = '0%';
     this.descuento = 0;
   }
 
@@ -165,8 +167,10 @@ export class RegistrarconsultaComponent implements OnInit {
         this.consultasMascota = mascota.consultas;
         if(mascota.consultas >= 2 && mascota.consultas <= 4){
           this.descuento = 5;
+          this.descuentoTxt = '5%';
         }else if(mascota.consultas > 4){
           this.descuento = 10;
+          this.descuentoTxt = '10%';
         }
         break;
       }
@@ -239,7 +243,7 @@ export class RegistrarconsultaComponent implements OnInit {
       } 
     }
 
-    this.toastr.success('Consulta registrada', 'La nueva consulta se ha registrado exitosamente',{
+    this.toastr.success('La nueva consulta se ha registrado exitosamente','Consulta Registrada',{
       progressBar: true,
       timeOut: 2000,
       closeButton: true
@@ -266,6 +270,7 @@ export class RegistrarconsultaComponent implements OnInit {
     this.consultasMascota = 0;
     this.subtotal = 0;
     this.total = 0;
+    this.descuentoTxt = '0%';
     this.descuento = 0;
   }
 

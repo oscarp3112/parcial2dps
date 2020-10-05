@@ -39,7 +39,6 @@ export class DetallesClienteComponent implements OnInit {
 
     this.clienteProvisional = JSON.parse(localStorage.getItem('cliente'));
     this.cliente = this.formatearDatos(this.clienteProvisional);
-    console.log(this.cliente);
 
     localStorage.removeItem('consulta');
   }
@@ -67,11 +66,11 @@ export class DetallesClienteComponent implements OnInit {
 
     x.mascotas = this.mascotas;
     x.consultas = this.consultas;
-    console.log(x);
     return x;
   }
 
   eliminarMascota(mascota:Mascota){
+
     let indice = this.cliente.mascotas.indexOf(mascota);
     this.cliente.mascotas.splice(indice,1);
 
@@ -88,16 +87,24 @@ export class DetallesClienteComponent implements OnInit {
     if(this.cliente.consultas == null || this.cliente.consultas.length == 0){
       this.cliente.consultas.push(c);
     }
-    console.log(this.cliente);
+
+    //Guardo los datos en firebase
     this.datosService.guardarConsulta(this.cliente);
-    this.cliente.mascotas.pop();
+    //Guardo los datos a nivel local
+    localStorage.setItem('cliente',JSON.stringify(this.cliente));
+
+    //Elimino la mascota vacia para no mostrarla
+    if(this.cliente.mascotas[this.cliente.mascotas.length-1].nombre == "vacio"){
+      this.cliente.mascotas.pop();
+    }
+    
+    //Elimino la consulta vacia para no mostrarla
     if(this.cliente.consultas[this.cliente.consultas.length-1].nombreMascota == "eliminar"){
       this.cliente.consultas.pop();
     }
-    console.log(this.cliente);
 
 
-    this.toastr.warning('Mascota Eliminada', 'La mascota se ha eliminado exitosamente',{
+    this.toastr.warning('La mascota se ha eliminado exitosamente','Mascota Eliminada',{
       progressBar: true,
       timeOut: 2000,
       closeButton: true
@@ -106,5 +113,12 @@ export class DetallesClienteComponent implements OnInit {
 
   verConsulta(consulta:Consulta){
     localStorage.setItem('consulta', JSON.stringify(consulta));
+  }
+
+  actualizarCliente(t){
+    if(t=="actualizar"){
+      this.clienteProvisional = JSON.parse(localStorage.getItem('cliente'));
+      this.cliente = this.formatearDatos(this.clienteProvisional);
+    }
   }
 }

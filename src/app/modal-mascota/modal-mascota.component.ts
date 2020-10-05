@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { EventEmitter } from '@angular/core';
 import { Cliente } from '../models/cliente';
 import { Mascota } from '../models/mascota';
 import { DatosService } from '../services/datos.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-modal-mascota',
@@ -15,9 +17,12 @@ export class ModalMascotaComponent {
   nombreMascota:string = "";
   closeResult = '';
 
+  @Output() actualizar = new EventEmitter();
+
   constructor(
     private modalService: NgbModal,
-    private servicioDatos:DatosService
+    private servicioDatos:DatosService,
+    private toastr:ToastrService
     ) {}
 
   open(content) {
@@ -31,17 +36,30 @@ export class ModalMascotaComponent {
   }
 
   agregarMascota(){
-    if(this.cliente.mascotas[0].nombre = "vacio"){
+    //Formate el objeto del cliente y la mascota nueva
+    if(this.cliente.mascotas[0].nombre == "vacio"){
       this.cliente.mascotas.pop();
     }
     let m = new Mascota;
     m.nombre = this.nombreMascota;
     m.consultas = 0;
-    console.log(m);
     this.cliente.mascotas.push(m);
-    console.log(this.cliente);
+
+    //Envio la mascota nueva a la base de datos
     this.servicioDatos.agregarCliente(this.cliente.DUI, this.cliente);
+
+    //Almaceno el cambio de la mascota en el local Storage
+    localStorage.setItem('cliente',JSON.stringify(this.cliente));
+    this.actualizar.emit("actualizar");
+
+    //Elimino el nombre de la mascota del input
     this.nombreMascota = "";
+
+    this.toastr.success('La nueva mascota se ha registrado exitosamente','Mascota Registrada',{
+      progressBar: true,
+      timeOut: 2000,
+      closeButton: true
+    });
   }
 
 
