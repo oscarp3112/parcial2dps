@@ -165,12 +165,12 @@ export class RegistrarconsultaComponent implements OnInit {
       if(mascota.nombre == this.nombreMascotaSeleccionada){
         this.mascotaSeleccionada = mascota;
         this.consultasMascota = mascota.consultas;
-        if(mascota.consultas >= 2 && mascota.consultas <= 4){
+        if(mascota.consultas >= 2 && mascota.consultas <= 5){
           this.descuento = 5;
           this.descuentoTxt = '5%';
-        }else if(mascota.consultas > 4){
-          this.descuento = 10;
-          this.descuentoTxt = '10%';
+        }else if(mascota.consultas > 5){
+          this.descuento = 8;
+          this.descuentoTxt = '8%';
         }
         break;
       }
