@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -12,7 +11,5 @@ export class NavbarComponent implements OnInit {
 
   constructor(public authService: AuthService) { }
   public app_name = "Parcial 2 DPS";
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
